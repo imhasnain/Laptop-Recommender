@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // ✅ added for Vercel route discovery
 import { FaUniversity, FaMoneyBill, FaLaptopCode, FaClock, FaUser } from "react-icons/fa";
 
 export default function HomePage() {
@@ -23,7 +24,9 @@ export default function HomePage() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -53,18 +56,21 @@ export default function HomePage() {
 
       <Card className="max-w-2xl mx-auto shadow-xl">
         <CardContent className="p-6 space-y-6">
-
           {/* 👤 Basic Info */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">👤 Personal Information</h2>
             <div>
-              <Label className="flex items-center gap-2"><FaUser /> Name *</Label>
+              <Label className="flex items-center gap-2">
+                <FaUser /> Name *
+              </Label>
               <Input name="name" value={form.name} onChange={handleChange} />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             <div>
-              <Label className="flex items-center gap-2"><FaUniversity /> University (Optional)</Label>
+              <Label className="flex items-center gap-2">
+                <FaUniversity /> University (Optional)
+              </Label>
               <Input name="university" value={form.university} onChange={handleChange} />
             </div>
           </div>
@@ -73,7 +79,9 @@ export default function HomePage() {
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">💻 Laptop Preferences</h2>
             <div>
-              <Label className="flex items-center gap-2"><FaMoneyBill /> Budget (PKR) *</Label>
+              <Label className="flex items-center gap-2">
+                <FaMoneyBill /> Budget (PKR) *
+              </Label>
               <Input name="budget" type="number" value={form.budget} onChange={handleChange} />
               {errors.budget && <p className="text-red-500 text-sm">{errors.budget}</p>}
             </div>
@@ -93,26 +101,34 @@ export default function HomePage() {
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">🎯 Academic Needs</h2>
             <div>
-  <Label className="flex items-center gap-2"><FaLaptopCode /> Purpose *</Label>
-  <select
-    name="purpose"
-    value={form.purpose}
-    onChange={handleChange}
-    className="w-full border rounded p-2"
-  >
-    <option value="">Select purpose</option>
-    <option value="Programming">Programming</option>
-    <option value="Office Work">Office Work</option>
-    <option value="Gaming">Gaming</option>
-    <option value="General">General Use</option>
-  </select>
-  {errors.purpose && <p className="text-red-500 text-sm">{errors.purpose}</p>}
-</div>
-
+              <Label className="flex items-center gap-2">
+                <FaLaptopCode /> Purpose *
+              </Label>
+              <select
+                name="purpose"
+                value={form.purpose}
+                onChange={handleChange}
+                className="w-full border rounded p-2"
+              >
+                <option value="">Select purpose</option>
+                <option value="Programming">Programming</option>
+                <option value="Office Work">Office Work</option>
+                <option value="Gaming">Gaming</option>
+                <option value="General">General Use</option>
+              </select>
+              {errors.purpose && <p className="text-red-500 text-sm">{errors.purpose}</p>}
+            </div>
 
             <div>
-              <Label className="flex items-center gap-2"><FaClock /> Usage Duration *</Label>
-              <select name="duration" value={form.duration} onChange={handleChange} className="w-full border rounded p-2">
+              <Label className="flex items-center gap-2">
+                <FaClock /> Usage Duration *
+              </Label>
+              <select
+                name="duration"
+                value={form.duration}
+                onChange={handleChange}
+                className="w-full border rounded p-2"
+              >
                 <option value="">Select duration</option>
                 <option value="short">Short Term</option>
                 <option value="long">Long Term</option>
@@ -122,9 +138,19 @@ export default function HomePage() {
           </div>
 
           {/* 🚀 Submit */}
-          <Button onClick={handleSubmit} className="w-full transition-all duration-300 hover:scale-105">
+          <Button
+            onClick={handleSubmit}
+            className="w-full transition-all duration-300 hover:scale-105"
+          >
             🔍 Get Laptop Recommendations
           </Button>
+
+          {/* ✅ Dummy Link to force /result route inclusion in Vercel */}
+          <div className="text-center mt-4">
+            <Link href="/result" className="text-blue-500 underline">
+              Test Result Page
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
